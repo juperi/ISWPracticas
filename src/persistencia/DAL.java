@@ -11,6 +11,8 @@ public class DAL {
 	// Declaracion DAOs
 	private ICategoriaDAO catDAO;
 	private ISucursalDAO sucDAO;
+	private IClienteDAO cliDAO;
+	private IReservaDAO resDAO;
 
 	/*************************
 	 ****** Constructor *****
@@ -26,6 +28,8 @@ public class DAL {
     public DAL() throws DAOExcepcion{
     	catDAO = new CategoriaDAOImp();
     	sucDAO = new SucursalDAOImp();
+    	cliDAO = new ClienteDAOImp();
+    	resDAO = new ReservaDAOImp();
     }
 
     /*************************
@@ -46,6 +50,28 @@ public class DAL {
     	} catch (DAOExcepcion e) {
     		return null;
     	}
+    }
+
+    public List<ClienteDTO> obtenerClientes() {
+    	try {
+    		return cliDAO.obtenerClientes();
+    	} catch (DAOExcepcion e) {
+    		return null;
+    	}
+    }
+
+    public List<ReservaDTO> obtenerReservas() {
+    	try {
+    		return resDAO.obtenerReservas();
+    	} catch (DAOExcepcion e) {
+    		return null;
+    	}
+    }
+
+    public void crearCliente(ClienteDTO cliente) {
+    	try {
+    		cliDAO.crearCliente(cliente);
+    	}catch (DAOExcepcion e) { }
     }
 
 }

@@ -3,23 +3,31 @@ package presentacion.control;
 import java.awt.event.ActionEvent;
 
 import excepciones.LogicaExcepcion;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ControladorPrincipal{
 
 	private static final String CREAR_CLIENTE = "../vista/crear-cliente.fxml";
 	private static final String LISTAR_RESERVAS_SUCURSAL = "../vista/listar-reservas-sucursal.fxml";
+	private static final String LISTAR_SUCURSALES = "../vista/listar-sucursales.fxml";
 
 	//TODO añadir constantes de tipo String para la vistas correspondientes a los casos de
 	//uso Crear Reserva y Listar Reservas de una Sucursal
 	private Stage primaryStage;
 
 	@FXML
+	/*
 	void listarSucursales(ActionEvent event) throws LogicaExcepcion {
 		initCasoDeUso(LISTAR_SUCURSALES, ControladorListarSucursales.class).show();
+	}
+	*/
+	void listarSucursales(ActionEvent event) throws LogicaExcepcion {
+		Stage stage = initCasoDeUso(LISTAR_SUCURSALES,
+							ControladorListarSucursales.class).getStage();
+		stage.initModality(Modality.WINDOW_MODAL); stage.show();
 	}
 
 	@FXML
@@ -32,7 +40,8 @@ public class ControladorPrincipal{
 		//TODO implementar el manejador del C.U. Listar reservas de una sucursal
 	}
 
-	@FXML void salir(ActionEvent event) {
+	@FXML
+	void salir(ActionEvent event) {
 		Platform.exit();
 	}
 

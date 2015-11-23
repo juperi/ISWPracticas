@@ -12,7 +12,7 @@ public class Cliente {
 	private String nombreyApellidos;
 	private String direccion;
 	private String poblacion;
-	private int codPostal;
+	private String codPostal;
 	private Date fechaCarnetConducir;
 	private int digitosTC;
 	private int mesTC;
@@ -24,7 +24,8 @@ public class Cliente {
 	 ****** Constructor  *****
 	 ************************/
 
-	public Cliente(String dni,String nombreyApellidos, String direccion, String poblacion, int codPostal, Date fechaCarnetConducir, int digitosTC, int mesTC, int añoTC, int cvcTC, String tipoTC){
+	public Cliente(String dni,String nombreyApellidos, String direccion, String poblacion, String codPostal, Date fechaCarnetConducir, int digitosTC, int mesTC, int añoTC, int cvcTC, String tipoTC){
+		this.dni = dni;
 		this.nombreyApellidos = nombreyApellidos;
 		this.direccion = direccion;
 		this.poblacion = poblacion;
@@ -34,7 +35,6 @@ public class Cliente {
 		this.añoTC = añoTC;
 		this.cvcTC = cvcTC;
 		this.tipoTC = tipoTC;
-		this.dni = dni;
 	}
 
 	/*************************
@@ -44,7 +44,7 @@ public class Cliente {
 	public String getnombreyApellidos(){return nombreyApellidos;}
 	public String getDireccion(){return direccion;}
 	public String getPoblacion(){return poblacion;}
-	public int getCodPostal(){return codPostal;}
+	public String getCodPostal(){return codPostal;}
 	public Date getFechaCarnetConducir(){return fechaCarnetConducir;}
 	public int getDigitosTC(){return digitosTC;}
 	public int getMesTC(){return mesTC;}
@@ -59,7 +59,7 @@ public class Cliente {
 	public void setnombreyApellidos(String nombreyApellidos){this.nombreyApellidos = nombreyApellidos;}
 	public void setDireccion(String direccion){this.direccion = direccion;}
 	public void setPoblacion(String poblacion){this.poblacion = poblacion;}
-	public void setCodPostal(int codPostal){this.codPostal = codPostal;}
+	public void setCodPostal(String codPostal){this.codPostal = codPostal;}
 	public void setFechaCarnetConducir(Date fechaCarnetConducir){this.fechaCarnetConducir = fechaCarnetConducir;}
 	public void setDigitosTC(int digitosTC){this.digitosTC = digitosTC;}
 	public void setMesTC(int mesTC){this.mesTC = mesTC;}

@@ -3,6 +3,7 @@ package persistencia;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import persistencia.dto.CategoriaDTO;
 import excepciones.DAOExcepcion;
 

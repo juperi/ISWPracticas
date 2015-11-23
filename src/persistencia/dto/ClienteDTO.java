@@ -9,7 +9,7 @@ public class ClienteDTO {
 	private String poblacion;
 	private String codPostal;
 	private Date fechaCanetConducir;
-	private String digitosTC;
+	private int digitosTC;
 	private int mesTC;
 	private int añoTC;
 	private int cvcTC;
@@ -17,7 +17,7 @@ public class ClienteDTO {
 
 	public ClienteDTO(String dni, String nombreyApellidos,
 			String direccion, String poblacion, String codPostal,
-			Date fechaCanetConducir, String digitosTC, int mesTC,
+			Date fechaCanetConducir, int digitosTC, int mesTC,
 			int añoTC, int cvcTC, String tipoTC) {
 		this.dni = dni;
 		this.nombreyApellidos = nombreyApellidos;
@@ -62,10 +62,10 @@ public class ClienteDTO {
 	public void setFechaCanetConducir(Date fechaCanetConducir) {
 		this.fechaCanetConducir = fechaCanetConducir;
 	}
-	public String getDigitosTC() {
+	public int getDigitosTC() {
 		return digitosTC;
 	}
-	public void setDigitosTC(String digitosTC) {
+	public void setDigitosTC(int digitosTC) {
 		this.digitosTC = digitosTC;
 	}
 	public int getMesTC() {

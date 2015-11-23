@@ -1,5 +1,5 @@
 package persistencia;
-
+/*
 import excepciones.*;
 import logica.AlquilerVehiculos;
 
@@ -11,7 +11,7 @@ public class DAOPersistenceTester {
 
 			AlquilerVehiculos alquiler = new AlquilerVehiculos();
 
-			//**algo**/
+			//algo
 
 			// listar categorias de la base de datos
 
@@ -21,7 +21,6 @@ public class DAOPersistenceTester {
 
 		//System.out.println( CategoriaDAOImp.obtenerCategorias());
 
-		/*
 		Date fechaRec1 = new Date(2016,05,12);
 		Date fechaDev1 = new Date(2016,05,15);
 		Date fechaCli1 = new Date(1970,02,12);
@@ -51,6 +50,7 @@ public class DAOPersistenceTester {
 			System.out.println(" ID: "+ r.getId() + "\n"+" Recogida: "+ r.getfechaRecogida()+
 					 " Devolucion: "+ r.getfechaDevolucion() + " modalidad " + r.getmodalidadAlquiler() + " Cliente " + r.getCliente().getdni());
 		}
-		*/
+
 	}
 }
+*/

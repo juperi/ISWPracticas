@@ -7,6 +7,8 @@ import java.util.HashMap;
 import excepciones.DAOExcepcion;
 import persistencia.DAL;
 import persistencia.dto.CategoriaDTO;
+import persistencia.dto.ClienteDTO;
+import persistencia.dto.ReservaDTO;
 import persistencia.dto.SucursalDTO;
 
 //***********************************
@@ -87,16 +89,20 @@ public class AlquilerVehiculos {
 	  public void anyadir_categoria(Categoria cat){categorias.put(cat.getNombre(),cat);}
 	  public void eliminar_categoria(Categoria cat){categorias.remove(cat.getNombre(),cat);}
 
+	 /********************************************
+	 ****** Caso de uso: Listar Sucursales *****
+	 ********************************************/
+
+	public List<Sucursal> listarSucursales(){
+		return new ArrayList<Sucursal>(sucursales.values());
+	}
+
 	/********************************************
 	 *** Caso de uso: Listar Reservas Sucursal ***
 	 ********************************************/
 
-	// Se devuelven en un ArrayList
 	public List<Reserva> listarReservas() {
 		return new ArrayList<Reserva>(reservas.values());
-	}
-	public List<Sucursal> listarSucursales(){
-		return new ArrayList<Sucursal>(sucursales.values());
 	}
 
 	/*********************************
@@ -115,11 +121,14 @@ public class AlquilerVehiculos {
 	 **********************************/
 
 	public void crearCliente(Cliente cliente) {
-		// if(cliente.getdni().equals(null)){
-		clientes.put(cliente.getdni(), cliente); // Si cliente no existe lo
-													// añade
-		// }
-		// else System.out.println("El cliente ya existe.");
+		ClienteDTO clienteDTO = new ClienteDTO(cliente.getdni(), cliente.getnombreyApellidos(),
+				cliente.getDireccion(), cliente.getPoblacion(), cliente.getCodPostal(),
+				cliente.getFechaCarnetConducir(), cliente.getDigitosTC(), cliente.getMesTC(),
+				cliente.getAñoTC(), cliente.getCvcTC(), cliente.getTipoTC());
+		// Lo añade al a memoria
+		clientes.put(cliente.getdni(), cliente);//añadirCliente(cliente);
+		// Y le pide a dal que lo persista
+		dal.crearCliente(clienteDTO);
 	}
 
 	/*********************************
@@ -129,6 +138,8 @@ public class AlquilerVehiculos {
 	private void cargaSistema() {
 		cargaCategorias();
 		cargaSucursales();
+		cargaClientes();
+		cargaReservas();
 		/*
 		// Creamos dos sucursales
 		Sucursal suc1 = new Sucursal(1, "Camino de Vera s/n");
@@ -146,7 +157,6 @@ public class AlquilerVehiculos {
 		*/
 	}
 
-	// Problema con categoria y categoriaDTO, uno devuelve un objeto y el otro un string
 	private void cargaCategorias(){
 		List<CategoriaDTO> listacatDTO = dal.obtenerCategorias();
 		// Crear y añadir todas las categorias a la coleccion
@@ -169,4 +179,26 @@ public class AlquilerVehiculos {
 			anyadir_sucursal(new Sucursal(sucDTO.getId(), sucDTO.getDirección()));
 		}
 	}
+
+	private void cargaClientes(){
+		List<ClienteDTO> listacliDTO = dal.obtenerClientes();
+		// Crear y añadir todos los clientes a la coleccion
+		for (ClienteDTO cliDTO : listacliDTO) {
+			anyadir_cliente(new Cliente(cliDTO.getDni(), cliDTO.getNombreyApellidos(), cliDTO.getDireccion(),
+					cliDTO.getPoblacion(), cliDTO.getCodPostal(), cliDTO.getFechaCanetConducir(), cliDTO.getDigitosTC(),
+					cliDTO.getMesTC(), cliDTO.getAñoTC(), cliDTO.getCvcTC(), cliDTO.getTipoTC()));
+		}
+	}
+
+	//Tema reservas
+	private void cargaReservas(){
+		List<ReservaDTO> listaresDTO = dal.obtenerReservas();
+		// Crear y añadir todas las reservas a la coleccion
+		for (ReservaDTO resDTO : listaresDTO) {
+			anyadir_reserva(new Reserva(resDTO.getId(), resDTO.getFechaRecogida(), resDTO.getFechaDevolucion(),
+					resDTO.getModalidadAlquiler(), resDTO.getDniCliente(), resDTO.getNombreCategoria(),
+					resDTO.getIdSucursalRecogida(), resDTO.getIdSucursalDevolucion()));
+		}
+	}
+
 }
