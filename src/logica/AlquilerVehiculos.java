@@ -6,10 +6,10 @@ import java.util.HashMap;
 
 import excepciones.DAOExcepcion;
 import persistencia.DAL;
-import persistencia.dto.CategoriaDTO;
-import persistencia.dto.ClienteDTO;
-import persistencia.dto.ReservaDTO;
-import persistencia.dto.SucursalDTO;
+import persistencia.dto.*;
+import logica.Categoria;
+import logica.Cliente;
+import logica.Sucursal;
 
 //***********************************
 // Clase que actua como Controlador
@@ -70,8 +70,8 @@ public class AlquilerVehiculos {
 		else return null;
 	}
 
-	public Cliente consultar_cliente(int id){
-		if( clientes.containsKey(id)) return clientes.get(id);
+	public Cliente consultar_cliente(String dni){
+		if( clientes.containsKey(dni)) return clientes.get(dni);
 		else return null;
 	}
 
@@ -110,10 +110,13 @@ public class AlquilerVehiculos {
 	 **********************************/
 
 	public void crearReserva(Reserva reserva) {
-		// Reserva reserva= new Reserva(dni);
-		// int dni //cliente introduce su dni
-		reservas.put(reserva.getId(), reserva);
-		// frecogida = cliente
+		ReservaDTO reservaDTO = new ReservaDTO(reserva.getId(), reserva.getfechaRecogida(), reserva.getfechaDevolucion(),
+				reserva.getmodalidadAlquiler(), reserva.getCliente().getdni(), reserva.getCategoria().getNombre(),
+				reserva.getSucursal_recogida().getId(),reserva.getSucursal_devolucion().getId());
+		// Lo añade a la memoria
+		reservas.put(reserva.getId(), reserva);//añadirReserva(reserva);
+		// Y le pide a dal que lo persista
+		dal.crearReserva(reservaDTO);
 	}
 
 	/*********************************
@@ -125,7 +128,7 @@ public class AlquilerVehiculos {
 				cliente.getDireccion(), cliente.getPoblacion(), cliente.getCodPostal(),
 				cliente.getFechaCarnetConducir(), cliente.getDigitosTC(), cliente.getMesTC(),
 				cliente.getAñoTC(), cliente.getCvcTC(), cliente.getTipoTC());
-		// Lo añade al a memoria
+		// Lo añade a la memoria
 		clientes.put(cliente.getdni(), cliente);//añadirCliente(cliente);
 		// Y le pide a dal que lo persista
 		dal.crearCliente(clienteDTO);
@@ -138,7 +141,7 @@ public class AlquilerVehiculos {
 	private void cargaSistema() {
 		cargaCategorias();
 		cargaSucursales();
-		cargaClientes();
+		//cargaClientes();
 		cargaReservas();
 		/*
 		// Creamos dos sucursales
@@ -180,24 +183,13 @@ public class AlquilerVehiculos {
 		}
 	}
 
-	private void cargaClientes(){
-		List<ClienteDTO> listacliDTO = dal.obtenerClientes();
-		// Crear y añadir todos los clientes a la coleccion
-		for (ClienteDTO cliDTO : listacliDTO) {
-			anyadir_cliente(new Cliente(cliDTO.getDni(), cliDTO.getNombreyApellidos(), cliDTO.getDireccion(),
-					cliDTO.getPoblacion(), cliDTO.getCodPostal(), cliDTO.getFechaCanetConducir(), cliDTO.getDigitosTC(),
-					cliDTO.getMesTC(), cliDTO.getAñoTC(), cliDTO.getCvcTC(), cliDTO.getTipoTC()));
-		}
-	}
-
-	//Tema reservas
 	private void cargaReservas(){
 		List<ReservaDTO> listaresDTO = dal.obtenerReservas();
 		// Crear y añadir todas las reservas a la coleccion
 		for (ReservaDTO resDTO : listaresDTO) {
 			anyadir_reserva(new Reserva(resDTO.getId(), resDTO.getFechaRecogida(), resDTO.getFechaDevolucion(),
-					resDTO.getModalidadAlquiler(), resDTO.getDniCliente(), resDTO.getNombreCategoria(),
-					resDTO.getIdSucursalRecogida(), resDTO.getIdSucursalDevolucion()));
+					resDTO.getModalidadAlquiler(), consultar_cliente(resDTO.getDniCliente()), consultar_categoria(resDTO.getNombreCategoria()),
+					consultar_sucursal(resDTO.getIdSucursalRecogida()), consultar_sucursal(resDTO.getIdSucursalDevolucion())));
 		}
 	}
 

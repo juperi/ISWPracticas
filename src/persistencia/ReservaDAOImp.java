@@ -22,10 +22,10 @@ public class ReservaDAOImp implements IReservaDAO{
 		}
 	}
 
-	public List<ReservaDTO> obtenerReservas() throws DAOExcepcion {
+	public List<ReservaDTO> obtenerReservasPorSucursalOrigen(int idSucursalRecogida) throws DAOExcepcion {
 		try{
 			connManager.connect();
-			ResultSet rs=connManager.queryDB("select * from RESERVA");
+			ResultSet rs=connManager.queryDB("select * from RESERVA where IDSUCURSALRECOGIDA= '"+idSucursalRecogida+"'");
 			connManager.close();
 
 			List<ReservaDTO> listaReservaDTO = new ArrayList<ReservaDTO>();
@@ -70,4 +70,9 @@ public class ReservaDAOImp implements IReservaDAO{
 			else return null;
 			} catch (SQLException e){ throw new DAOExcepcion(e);}
 		}
+
+	// Falta implementar
+	public void crearReserva(ReservaDTO reserva) throws DAOExcepcion{
+
+	}
 }

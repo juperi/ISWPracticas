@@ -36,6 +36,7 @@ public class DAL {
 	 *******  Metodos  *******
 	 ************************/
 
+    // Listar Categorias, Sucursales y Reservas de una sucursal
     public List<CategoriaDTO> obtenerCategorias() {
     	try {
     		return catDAO.obtenerCategorias();
@@ -52,25 +53,24 @@ public class DAL {
     	}
     }
 
-    public List<ClienteDTO> obtenerClientes() {
-    	try {
-    		return cliDAO.obtenerClientes();
-    	} catch (DAOExcepcion e) {
-    		return null;
-    	}
-    }
-
     public List<ReservaDTO> obtenerReservas() {
     	try {
-    		return resDAO.obtenerReservas();
+    		return resDAO.obtenerReservasPorSucursalOrigen();
     	} catch (DAOExcepcion e) {
     		return null;
     	}
     }
 
+    // Crear reserva y cliente
     public void crearCliente(ClienteDTO cliente) {
     	try {
     		cliDAO.crearCliente(cliente);
+    	}catch (DAOExcepcion e) { }
+    }
+
+    public void crearReserva(ReservaDTO reserva) {
+    	try {
+    		resDAO.crearReserva(reserva);
     	}catch (DAOExcepcion e) { }
     }
 
